@@ -45,46 +45,55 @@ function displayInventory() {
 
 displayInventory();
 
-// Prompt the user. 
+// Prompt the user and ask what is the id of the product they would like to buy. 
 var promptUser = function () {
     inquirer.prompt({
         name: "action",
         type: "input",
-        message: "What would you like to do?",
-        choices: [
-            "Find songs by artist",
-        ]
-    }).then(function (answer) {
-        switch (answer.action) {
-            case "Find songs by artist":
-                artistSearch();
-                break;
+        message: "What is the id of the product you would like to buy?",
 
-            case "Find all artists who appear more than once":
-                multiSearch();
-                break;
+    }).then(function (user) {
+        console.log(user.action);
+        inquirer.prompt({
+            name: "quantity",
+            type: "input",
+            message: "What is the quantity you would like to purchase? ",
 
-            case "Find data within a specific range":
-                rangeSearch();
-                break;
-
-            case "Search for a specific song":
-                songSearch();
-                break;
-
-            case "Find artists with a top song and top album in the same year":
-                songAndAlbumSearch();
-                break;
-        }
+        }).then(function (user) {
+            console.log(user.quantity);
+            checkQuantity();
+        });
     });
 
 }; // Closes promptUser function. 
 
-// What is the ID of the product they would like to buy?
+
+
 // Check if your store has enough of the product to meet the customer's request. 
 // If not, display "insufficient quantity" and prevent the order from going through. 
 // If it does, fulfill the user's order. User should be shown the total cost of their purchase and update should reflect in SQL database. 
 
+// Function to check product's stock quantity. 
+var checkQuantity = function () {
+    var query = "SELECT stock_quantity FROM products where item_id = ?";
+    connection.query(query, [user.action], function (err, res) {
+        if (res[0].stock_quantity > user.quantity ) {
+            purchaseQuantity(); 
+        } else {
+            console.log ("Insufficient quantities available!"); 
+        }
+    });
+};
 
+
+// Function to update product's stock quantity after user "purchase". 
+var purchaseQuantity = function () {
+    var query = "UPDATE products SET stock_quantity = ? WHERE item_id = ? ";
+    connection.query(query, [user.quantity, user.action], function (err, res) {
+        console.log(res); 
+    });
+};
+
+promptUser(); 
 
 connection.end(); 
