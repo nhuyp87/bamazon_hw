@@ -1,0 +1,24 @@
+{
+  "name": "bamazon_hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhuyp87/bamazon_hw.git"
+  },
+  "author": "nhuyp87",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nhuyp87/bamazon_hw/issues"
+  },
+  "homepage": "https://github.com/nhuyp87/bamazon_hw#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "inquirer": "^3.1.0",
+    "mysql": "^2.13.0"
+  }
+}
