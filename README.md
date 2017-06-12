@@ -1,6 +1,6 @@
 # bamazon_hw
 
-###Bamazon Customer
+### Bamazon Customer
 
 Inventory table loads upon starting the Bamazon customer app and prompts user to specify the id of the product he/she would like to purchase
 ![Image 1](images/image-1.png)
@@ -14,7 +14,7 @@ If user purchases a quantity over the amount available, he/she will receive a no
 The app continues to prompt the user to purchase more products until the user selects "No". 
 ![Image 4](images/image-4.png)
 
-###Bamazon Manager
+### Bamazon Manager
 
 Manager is prompted and allowed to select from several options. 
 ![Image 5](images/image-5.png)
