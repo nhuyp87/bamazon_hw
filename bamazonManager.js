@@ -17,7 +17,7 @@ connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
 });
- 
+
 
 
 
@@ -73,15 +73,17 @@ var contPurchase = function () {
 
     }]).then(function (user) {
         if (user.action == "Yes") {
-            mainMenu(); 
+            mainMenu();
         } else {
             console.log("Thank you. Have a nice day.");
-            connection.end(); 
+            connection.end();
         }
-    
+
     });
 
-}; 
+};
+
+// Display all products.
 
 // Function to view products for sale and list ids, product names, quantities. 
 function viewProduct() {
@@ -133,7 +135,47 @@ function lowInventory() {
     });
 }; // Closes viewProduct function.
 
+
 // Function to allow manager to add quantity to any product in the store. 
+
+
+function addInventory() {
+    viewProduct(); 
+    inquirer.prompt([{
+        name: "action",
+        type: "input",
+        message: "What is the id of the product for which you would like to add additional inventory?",
+
+    }, {
+        name: "quantity",
+        type: "input",
+        message: "How much inventory would you like to add? ",
+
+    }]).then(function (user) {
+
+        connection.query("UPDATE products SET stock_quantity ? WHERE item_id = ? UNION SELECT * FROM products", [user.quantity, user.action], function (err, res) {
+            if (err) throw err;
+
+            // Add values to table using CLI npm package
+            // Instantiate 
+            var table = new Table({
+                head: ["Item ID", "Product Name", "Department Name", "Price", "Stock Quantity"], colWidths: [10, 20, 20, 20, 20]
+            });
+
+            // Loop through SQL table and push array into table in console.
+            for (var i = 0; i < res.length; i++) {
+                table.push([res[i].item_id, res[i].product_name, res[i].department_name, "$" + res[i].price, res[i].stock_quantity]);
+            }
+            console.log(table.toString());
+        });
+
+
+
+    });
+
+}
+
+
 
 
 mainMenu();
